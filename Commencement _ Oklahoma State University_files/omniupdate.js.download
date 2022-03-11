@@ -1,0 +1,32 @@
+$(function(){
+	$('a[href="#"]:not(.back-to-top)').on('click', function(e){
+		e.preventDefault();
+	});
+	
+	$('#panel2 nav.side-nav').html($('nav.side-nav:not(#panel2 nav.side-nav)').html()); // copies nav markup to header for use in mobile view
+	
+	/* Expands navigation section that the current page is in. [START] */
+	if(/path=([^&]+\.pcf)/.test(window.location.href)){
+		var url = unescape(window.location.href.match(/path=([^&]+)/)[1]).replace(/\.pcf$/, '.html');
+	}else{
+		var url = window.location.pathname;
+		if(/\/$/.test(url)) url += 'index.html'; // add index.html if url has a trailing slash.
+	}
+	
+	$('nav.side-nav .side-nav__body > ul > li a[href="' + url + '"]').addClass('active').parents('li').addClass('active');
+	
+	if(/\/index\.html$/.test(url)){ // if url ends with index.html find links missing the index.html as well.
+		$('nav.side-nav .side-nav__body > ul > li a[href="' + url.replace(/\/index\.html$/, '/') + '"]').addClass('active').parents('li').addClass('active');
+	}
+	
+	$('nav.side-nav .side-nav__body > ul li.active > span > a.active').each(function(){
+		$(this).parent().html($(this).html()); // remove anchor.
+	});
+	
+	$('nav.side-nav .side-nav__body > ul > li.active > a.active').each(function(){
+		$(this).parent().html('<span>' + $(this).html() + '</span>'); // remove anchor and place link text in a span.
+	});
+	
+	/* Expands navigation section that the current page is in. [END] */
+	
+});

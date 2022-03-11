@@ -1,0 +1,3 @@
+/* Insert google analytics code here. */
+  ga('create', 'UA-58758818-1', 'auto','sitetracker');
+  ga('sitetracker.send', 'pageview');
